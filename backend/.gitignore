@@ -1,0 +1,12 @@
+charter_booking.db
+.vs
+venv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+app/__pycache__
+app/setup
+app/db/mongo_setup
+app/db/sql_setup
+app/core/security.py

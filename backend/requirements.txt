@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+sqlalchemy
+pydantic
+python-dotenv
+psycopg2-binary
+email-validator
+python-jose[cryptography]
+passlib
+bcrypt
+python-multipart
+pytz
+psycopg2-binary
+apscheduler

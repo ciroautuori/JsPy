@@ -8,6 +8,8 @@ from app.core.middleware import HttpsRedirectFixMiddleware
 
 # Creazione delle tabelle
 Base.metadata.create_all(bind=engine)
+
+# Ottenimento del ROOT_PATH per la root path del FastAPI
 root_path = os.getenv("ROOT_PATH", "")
 
 # Inizializzazione FastAPI con metadata per Swagger
@@ -31,6 +33,7 @@ origins = [
     "http://127.0.0.1:5174",  # Alternative port
 ]
 
+# Aggiunta del middleware CORS al FastAPI
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -38,13 +41,15 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.add_middleware(HttpsRedirectFixMiddleware)
 
+# Aggiunta del middleware HttpsRedirectFixMiddleware
+app.add_middleware(HttpsRedirectFixMiddleware)
 
 # Includiamo i router delle API
 app.include_router(auth.router, prefix="/auth", tags=["Auth"])
 app.include_router(user.router, prefix="/users", tags=["Users"])
 
+# Aggiunta dello schema OpenAPI al FastAPI
 openapi_schema = app.openapi()
 openapi_schema["components"]["securitySchemes"] = {
     "cookieAuth": {

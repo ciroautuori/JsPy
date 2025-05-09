@@ -1,9 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import os
-from app.api import user
 from app.core import auth
+from app.core.config import settings
+from app.api import user, project
 from app.core.database import engine, Base
+from fastapi.staticfiles import StaticFiles
 from app.core.middleware import HttpsRedirectFixMiddleware
 
 # Creazione delle tabelle
@@ -45,9 +47,13 @@ app.add_middleware(
 # Aggiunta del middleware HttpsRedirectFixMiddleware
 app.add_middleware(HttpsRedirectFixMiddleware)
 
+# Monta la directory dei file statici
+app.mount("/static", StaticFiles(directory=settings.STATIC_FILES_DIR), name="static")
+
 # Includiamo i router delle API
 app.include_router(auth.router, prefix="/auth", tags=["Auth"])
 app.include_router(user.router, prefix="/users", tags=["Users"])
+app.include_router(project.router, prefix="/api", tags=["Projects"])
 
 # Aggiunta dello schema OpenAPI al FastAPI
 openapi_schema = app.openapi()

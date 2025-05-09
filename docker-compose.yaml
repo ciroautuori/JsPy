@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: portfolio-backend
+    ports:
+      - "8002:8000"
+    environment:
+      - DATABASE_URL=postgresql+psycopg2://root:password@postgres:5432/portfolio_db
+      - SECRET_KEY=your_secret_key
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    volumes:
+      - ./backend/static:/app/static
+
+  postgres:
+    container_name: portfolio_postgres
+    image: postgres:13
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: portfolio_db
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5435:5432"

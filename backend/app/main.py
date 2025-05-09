@@ -51,9 +51,9 @@ app.add_middleware(HttpsRedirectFixMiddleware)
 app.mount("/static", StaticFiles(directory=settings.STATIC_FILES_DIR), name="static")
 
 # Includiamo i router delle API
-app.include_router(auth.router, prefix="/auth", tags=["Auth"])
-app.include_router(user.router, prefix="/users", tags=["Users"])
+# app.include_router(auth.router, prefix="/auth", tags=["Auth"])
 app.include_router(project.router, prefix="/api", tags=["Projects"])
+app.include_router(user.router, prefix="/users", tags=["Users"])
 
 # Aggiunta dello schema OpenAPI al FastAPI
 openapi_schema = app.openapi()

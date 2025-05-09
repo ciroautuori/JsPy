@@ -10,11 +10,7 @@ from app.core.config import settings
 from app.schemas.project import Project as ProjectSchema, ProjectCreate, ProjectUpdate
 from app.crud import project as project_crud
 
-router = APIRouter(
-    prefix="/projects",
-    tags=["projects"],
-    responses={404: {"description": "Not found"}}
-)
+router = APIRouter()
 
 
 @router.get("/", response_model=List[ProjectSchema])
